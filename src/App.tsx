@@ -1,7 +1,9 @@
-const App : () => React.JSX.Element = () : React.JSX.Element => {
+import './App.css'
+
+function App() : React.JSX.Element {
 
   return (
-      <h1>This is first automation deployment trigger</h1>
+      <h1>Hello React</h1>
   )
 }
 
