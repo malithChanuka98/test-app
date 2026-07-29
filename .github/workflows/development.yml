@@ -20,10 +20,11 @@ jobs:
       - run: npm ci
       - run: npm run build
 
-      - name: Deploy build to EC2
+      - name: Setup SSH
         run: |
-          rsync -avz dist/ "$EC2_USER@$EC2_HOST:$EC2_APP_PATH"
+          mkdir -p ~/.ssh
+          echo "$EC2_SSH_KEY" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          echo -e "Host *\n\tStrictHostKeyChecking no\n\tUserKnownHostsFile=/dev/null" > ~/.ssh/config
         env:
-          EC2_USER: ${{ secrets.EC2_USER }}
-          EC2_HOST: ${{ secrets.EC2_HOST }}
-          EC2_APP_PATH: ${{ secrets.EC2_APP_PATH }}
+          EC2_SSH_KEY: ${{ secrets.EC2_SSH_KEY }}
